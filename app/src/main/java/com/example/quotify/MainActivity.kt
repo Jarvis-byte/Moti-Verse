@@ -1,6 +1,7 @@
 package com.example.quotify
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
     lateinit var quoteText: TextView
     lateinit var quoteAuthor: TextView
+    private var bitmap: Bitmap? = null
+    private val REQUEST_CODE_PERMISSION = 123 // Replace with any unique integer value
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,15 +47,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onShare(view: View) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.setType("text/plain")
-        mainViewModel.getQuotelist().observe(this, Observer {
-            intent.putExtra(Intent.EXTRA_TEXT, it.get(mainViewModel.index).content + " BY ")
+        val shareText = "${quoteText.text}\n\n— ${quoteAuthor.text}"
 
-        })
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            type = "text/plain"
+        }
 
-        startActivity(intent)
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+
     }
+
 
     fun onNext(view: View) {
         mainViewModel.nextQuote()
