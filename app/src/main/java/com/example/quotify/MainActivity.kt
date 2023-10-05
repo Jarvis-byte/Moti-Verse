@@ -1,7 +1,6 @@
 package com.example.quotify
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -17,8 +16,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
     lateinit var quoteText: TextView
     lateinit var quoteAuthor: TextView
-    private var bitmap: Bitmap? = null
-    private val REQUEST_CODE_PERMISSION = 123 // Replace with any unique integer value
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
