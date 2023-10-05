@@ -14,19 +14,14 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
     var quoteList = MutableLiveData<List<ResultRandom>>()
-    private var index = 0
+    var index = 0
+    var ListSize = 0
 
     // Getter for quoteList
     fun getQuotelist(): MutableLiveData<List<ResultRandom>> {
         return quoteList
     }
 
-    // Function to update quoteList
-//    fun updateQuoteList(newList: LiveData<List<ResultRandom>>?) {
-//        if (newList != null) {
-//            quoteList = newList
-//        }
-//    }
 
     fun apicall() {
         if (quoteList.value?.isEmpty() == false) {
@@ -38,8 +33,21 @@ class MainViewModel : ViewModel() {
             val call = quotesApi.getListQuotes(1)
             if (call.body() != null) {
                 quoteList.postValue(call.body()!!.results)
+                ListSize = call.body()!!.results.size
+                Log.i(TAGHttp, call.body()!!.results.size.toString())
             }
 
         }
+    }
+
+    fun getQuote() = quoteList.value?.get(index)
+
+    fun nextQuote() {
+        ++index % ListSize
+    }
+
+    fun PrevQuote() {
+        (--index + ListSize) % ListSize
+
     }
 }
