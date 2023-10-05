@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         mainViewModel.getQuotelist().observe(this, Observer {
+//            Log.i("List",mainViewModel.getQuote().)
             setQuote(mainViewModel.getQuote())
 
         })
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     fun setQuote(quote: ResultRandom?) {
         quoteText.text = quote?.content
+//        Log.i(TAGHttp+"Content", quote?.content.toString())
+//        Log.i(TAGHttp+"Author", quote?.author.toString())
         quoteAuthor.text = quote?.author
 
     }
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.setType("text/plain")
         mainViewModel.getQuotelist().observe(this, Observer {
-            intent.putExtra(Intent.EXTRA_TEXT, it.get(0).content)
+            intent.putExtra(Intent.EXTRA_TEXT, it.get(mainViewModel.index).content + " BY ")
 
         })
 
@@ -51,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onNext(view: View) {
-
         mainViewModel.nextQuote()
         setQuote(mainViewModel.getQuote())
 //        Toast.makeText(this, "Called", Toast.LENGTH_SHORT).show()
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onPrevious(view: View) {
-        mainViewModel.nextQuote()
+        mainViewModel.PrevQuote()
         setQuote(mainViewModel.getQuote())
 
 

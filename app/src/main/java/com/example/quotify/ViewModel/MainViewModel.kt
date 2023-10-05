@@ -34,20 +34,33 @@ class MainViewModel : ViewModel() {
             if (call.body() != null) {
                 quoteList.postValue(call.body()!!.results)
                 ListSize = call.body()!!.results.size
+
+//                for (i in 0 until ListSize) {
+//                    Log.i(TAGHttp, quoteList.value?.get(i)?.content!!)
+//                    quoteList.value?.get(i)?.author
+//
+//                }
                 Log.i(TAGHttp, call.body()!!.results.size.toString())
             }
-
         }
     }
 
-    fun getQuote() = quoteList.value?.get(index)
+    fun getQuote(): ResultRandom? {
+        return quoteList.value?.get(index)
+    }
 
     fun nextQuote() {
-        ++index % ListSize
+        if (ListSize > 0) {
+            index = (index + 1) % ListSize
+            Log.i("Index Next", index.toString() + "->" + ListSize)
+        }
     }
 
     fun PrevQuote() {
-        (--index + ListSize) % ListSize
+        if (ListSize > 0) {
+            index = (index - 1 + ListSize) % ListSize
+            Log.i("Index Prev", index.toString())
+        }
 
     }
 }
