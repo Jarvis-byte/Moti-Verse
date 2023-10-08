@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     var quoteList = MutableLiveData<List<ResultRandom>>()
     var index = 0
@@ -52,14 +52,14 @@ class MainViewModel : ViewModel() {
     fun nextQuote() {
         if (ListSize > 0) {
             index = (index + 1) % ListSize
-            Log.i("Index Next", index.toString() + "->" + ListSize)
+
         }
     }
 
     fun PrevQuote() {
         if (ListSize > 0) {
             index = (index - 1 + ListSize) % ListSize
-            Log.i("Index Prev", index.toString())
+
         }
 
     }

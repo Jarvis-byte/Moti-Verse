@@ -3,10 +3,12 @@ package com.example.quotify
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.example.quotify.HttpHandler.ResultRandom
 import com.example.quotify.ViewModel.MainViewModel
 
@@ -16,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
     lateinit var quoteText: TextView
     lateinit var quoteAuthor: TextView
+    lateinit var anim: LottieAnimationView
+    lateinit var quote_image: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +27,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         quoteText = findViewById(R.id.quoteText)
         quoteAuthor = findViewById(R.id.quoteAuthor)
+        quote_image = findViewById(R.id.quote_image)
+        anim = findViewById(R.id.loading_animation)
+        anim.playAnimation()
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         mainViewModel.getQuotelist().observe(this, Observer {
-//            Log.i("List",mainViewModel.getQuote().)
+            anim.visibility = View.GONE
+            quoteText.visibility = View.VISIBLE
+            quoteAuthor.visibility = View.VISIBLE
+            quote_image.visibility = View.VISIBLE
             setQuote(mainViewModel.getQuote())
-
         })
         mainViewModel.apicall()
 
@@ -36,9 +45,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setQuote(quote: ResultRandom?) {
+
         quoteText.text = quote?.content
-//        Log.i(TAGHttp+"Content", quote?.content.toString())
-//        Log.i(TAGHttp+"Author", quote?.author.toString())
         quoteAuthor.text = quote?.author
 
     }
