@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.example.quotify.R
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -15,6 +16,9 @@ class PushNotification : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.i("TOKEN", token)
+        val tokenData = mapOf("token" to token)
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("DeviceToken").document().set(tokenData)
     }
 
     @SuppressLint("MissingPermission")
