@@ -9,6 +9,7 @@ import com.example.quotify.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import java.util.Random
 
 const val CHANNEL_ID = "Quotify_Notification"
 
@@ -20,6 +21,7 @@ class PushNotification : FirebaseMessagingService() {
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("DeviceToken").document().set(tokenData)
     }
+
 
     @SuppressLint("MissingPermission")
     override fun onMessageReceived(message: RemoteMessage) {
@@ -34,9 +36,10 @@ class PushNotification : FirebaseMessagingService() {
         val notification = android.app.Notification.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(body)
-            .setSmallIcon(R.drawable.icon_quotify)
+            .setSmallIcon(R.drawable.icon)
             .setAutoCancel(true)
-
-        NotificationManagerCompat.from(this).notify(1, notification.build())
+        val random = Random()
+        val id = random.nextInt()
+        NotificationManagerCompat.from(this).notify(id, notification.build())
     }
 }

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
-import com.example.quotify.HttpHandler.ResultRandom
+import com.example.quotify.HttpHandler.RandomQuotesDataItem
 import com.example.quotify.ViewModel.MainViewModel
 
 const val TAGHttp = "Http Call"
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setQuote(quote: ResultRandom?) {
+    fun setQuote(quote: RandomQuotesDataItem?) {
 
         quoteText.text = quote?.content
         quoteAuthor.text = quote?.author

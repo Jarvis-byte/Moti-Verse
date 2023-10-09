@@ -11,8 +11,10 @@ interface ApiInterface {
     suspend fun getListQuotes(@Query("page") page: Int): Response<AllQuotesData>
 
     @GET("/quotes/random")
-   suspend fun getRandomQuotes(): Call<RandomQuotesData>
+    suspend fun getRandomQuotes(@Query("limit") limit: Int): Response<RandomQuotesData>
 
     @GET("/quotes")
-   suspend fun getTagsQuotes(@Query("tags") tags: String): Call<TagQuotesData>
+    suspend fun getTagsQuotes(@Query("tags") tags: String): Call<TagQuotesData>
+
+
 }
