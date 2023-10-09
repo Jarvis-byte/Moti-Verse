@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "754337058639",
+    "project_id": "quotify-30a6c",
+    "storage_bucket": "quotify-30a6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754337058639:android:65e0c1519cbc75904f7f3a",
+        "android_client_info": {
+          "package_name": "com.example.quotify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLnrxJD53GPfLMS8JdAiRp6D1lUaFYC7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
