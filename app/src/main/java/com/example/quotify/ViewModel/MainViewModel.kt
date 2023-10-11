@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.quotify.HttpHandler.ApiInterface
 import com.example.quotify.HttpHandler.RandomQuotesDataItem
-import com.example.quotify.HttpHandler.ResultRandom
 import com.example.quotify.HttpHandler.Retrofit_Instance
-import com.example.quotify.TAGHttp
+import com.example.quotify.UI.TAGHttp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

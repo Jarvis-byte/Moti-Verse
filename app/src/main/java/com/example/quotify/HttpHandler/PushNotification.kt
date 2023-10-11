@@ -3,6 +3,7 @@ package com.example.quotify.HttpHandler
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.example.quotify.R
@@ -16,12 +17,24 @@ const val CHANNEL_ID = "Quotify_Notification"
 class PushNotification : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.i("TOKEN", token)
+        val DeviceId: String = getDeviceInfo()
         val tokenData = mapOf("token" to token)
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("DeviceToken").document().set(tokenData)
+        firestore.collection("DeviceToken").document(DeviceId).set(tokenData)
     }
 
+    fun getDeviceInfo(): String {
+        val deviceInfo = StringBuilder()
+        deviceInfo.append("Brand: ${Build.BRAND}\n")
+        deviceInfo.append("Device: ${Build.DEVICE}\n")
+        deviceInfo.append("Model: ${Build.MODEL}\n")
+        deviceInfo.append("Manufacturer: ${Build.MANUFACTURER}\n")
+
+
+
+
+        return deviceInfo.toString()
+    }
 
     @SuppressLint("MissingPermission")
     override fun onMessageReceived(message: RemoteMessage) {

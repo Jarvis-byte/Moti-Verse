@@ -1,4 +1,4 @@
-package com.example.quotify
+package com.example.quotify.UI
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
 import com.example.quotify.HttpHandler.RandomQuotesDataItem
+import com.example.quotify.R
 import com.example.quotify.ViewModel.MainViewModel
 
 const val TAGHttp = "Http Call"
