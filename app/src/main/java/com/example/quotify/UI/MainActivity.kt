@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieAnimationView
 import com.example.quotify.Handler.DeviceIdHandler
-import com.example.quotify.RandomQuotesDataItem
 import com.example.quotify.R
+import com.example.quotify.RandomQuotesDataItem
 import com.example.quotify.ViewModel.MainViewModel
 import com.example.quotify.databinding.ActivityMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,10 +29,10 @@ const val TAGHttp = "Http Call"
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
-    lateinit var quoteText: TextView
-    lateinit var quoteAuthor: TextView
-    lateinit var anim: LottieAnimationView
-    lateinit var quote_image: ImageView
+//    lateinit var quoteText: TextView
+//    lateinit var quoteAuthor: TextView
+//    lateinit var anim: LottieAnimationView
+//    lateinit var quote_image: ImageView
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +40,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        quote_image = findViewById(R.id.quote_image)
-        anim = findViewById(R.id.loading_animation)
-        anim.playAnimation()
+        binding.loadingAnimation.playAnimation()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         binding.quote = mainViewModel.getQuote()
 
         mainViewModel.getQuotelist().observe(this, Observer {
-            anim.visibility = View.GONE
+            binding.loadingAnimation.visibility = View.GONE
             binding.quoteText.visibility = View.VISIBLE
             binding.quoteAuthor.visibility = View.VISIBLE
-            quote_image.visibility = View.VISIBLE
+            binding.quoteImage.visibility = View.VISIBLE
             setQuote(mainViewModel.getQuote())
 
         })
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onShare(view: View) {
-        val shareText = "${quoteText.text}\n\n— ${quoteAuthor.text}"
+        val shareText = "${binding.quoteText.text}\n\n— ${binding.quoteAuthor.text}"
 
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
