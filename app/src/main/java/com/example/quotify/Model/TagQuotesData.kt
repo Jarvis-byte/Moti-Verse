@@ -1,4 +1,4 @@
-package com.example.quotify.HttpHandler
+package com.example.quotify.Model
 
 data class TagQuotesData(
     val count: Int,

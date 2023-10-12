@@ -1,12 +1,14 @@
-package com.example.quotify.HttpHandler
+package com.example.quotify.Notification
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.os.Build
-import android.util.Log
+import android.app.PendingIntent
+import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
+import com.example.quotify.Handler.DeviceIdHandler
 import com.example.quotify.R
+import com.example.quotify.UI.MainActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -17,24 +19,13 @@ const val CHANNEL_ID = "Quotify_Notification"
 class PushNotification : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        val DeviceId: String = getDeviceInfo()
+
+        val DeviceId: String = DeviceIdHandler.getToken()
         val tokenData = mapOf("token" to token)
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("DeviceToken").document(DeviceId).set(tokenData)
     }
 
-    fun getDeviceInfo(): String {
-        val deviceInfo = StringBuilder()
-        deviceInfo.append("Brand: ${Build.BRAND}\n")
-        deviceInfo.append("Device: ${Build.DEVICE}\n")
-        deviceInfo.append("Model: ${Build.MODEL}\n")
-        deviceInfo.append("Manufacturer: ${Build.MANUFACTURER}\n")
-
-
-
-
-        return deviceInfo.toString()
-    }
 
     @SuppressLint("MissingPermission")
     override fun onMessageReceived(message: RemoteMessage) {
@@ -46,10 +37,19 @@ class PushNotification : FirebaseMessagingService() {
             NotificationChannel(CHANNEL_ID, "MyNotification", NotificationManager.IMPORTANCE_HIGH)
 
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            100,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+
         val notification = android.app.Notification.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(body)
             .setSmallIcon(R.drawable.icon)
+            .setContentIntent(pendingIntent)
             .setAutoCancel(true)
         val random = Random()
         val id = random.nextInt()

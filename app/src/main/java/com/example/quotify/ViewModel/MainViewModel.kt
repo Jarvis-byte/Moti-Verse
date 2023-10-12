@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.quotify.HttpHandler.ApiInterface
-import com.example.quotify.HttpHandler.RandomQuotesDataItem
 import com.example.quotify.HttpHandler.Retrofit_Instance
+import com.example.quotify.RandomQuotesDataItem
 import com.example.quotify.UI.TAGHttp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,13 +34,6 @@ class MainViewModel() : ViewModel() {
             if (call.body() != null) {
                 quoteList.postValue(call.body()!!)
                 ListSize = call.body()!!.size
-
-//                for (i in 0 until ListSize) {
-//                    Log.i(TAGHttp, quoteList.value?.get(i)?.content!!)
-//                    quoteList.value?.get(i)?.author
-//
-//                }
-                Log.i(TAGHttp, call.body()!!.size.toString())
             }
         }
     }
@@ -61,6 +54,5 @@ class MainViewModel() : ViewModel() {
             index = (index - 1 + ListSize) % ListSize
 
         }
-
     }
 }

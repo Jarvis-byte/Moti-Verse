@@ -1,6 +1,6 @@
-package com.example.quotify.HttpHandler
+package com.example.quotify.Model
 
-data class ResultRandom(
+data class ResultTag(
     val _id: String,
     val author: String,
     val authorSlug: String,

@@ -1,4 +1,6 @@
-package com.example.quotify.HttpHandler
+package com.example.quotify.Model
+
+import com.example.quotify.Model.ResultRandom
 
 data class AllQuotesData(
     val count: Int,

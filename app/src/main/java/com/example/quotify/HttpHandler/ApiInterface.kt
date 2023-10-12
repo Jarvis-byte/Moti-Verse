@@ -1,5 +1,8 @@
 package com.example.quotify.HttpHandler
 
+import com.example.quotify.Model.AllQuotesData
+import com.example.quotify.Model.RandomQuotesData
+import com.example.quotify.Model.TagQuotesData
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
