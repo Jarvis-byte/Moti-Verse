@@ -1,6 +1,6 @@
 package com.example.quotify
 
-data class RandomQuotesDataItem(
+ data class RandomQuotesDataItem(
     val _id: String,
     val author: String,
     val authorSlug: String,

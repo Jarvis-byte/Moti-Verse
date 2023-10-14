@@ -1,16 +1,14 @@
 package com.example.quotify.UI
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.airbnb.lottie.LottieAnimationView
 import com.example.quotify.Handler.DeviceIdHandler
 import com.example.quotify.R
 import com.example.quotify.RandomQuotesDataItem
@@ -18,6 +16,7 @@ import com.example.quotify.ViewModel.MainViewModel
 import com.example.quotify.databinding.ActivityMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,7 +28,8 @@ const val TAGHttp = "Http Call"
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
-//    lateinit var quoteText: TextView
+
+    //    lateinit var quoteText: TextView
 //    lateinit var quoteAuthor: TextView
 //    lateinit var anim: LottieAnimationView
 //    lateinit var quote_image: ImageView
@@ -70,8 +70,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("TOKEN_ERROR", "Failed to retrieve FCM token")
             }
         }
-
-
+//        saveQuote(applicationContext)
     }
 
     fun setQuote(quote: RandomQuotesDataItem?) {
@@ -93,6 +92,11 @@ class MainActivity : AppCompatActivity() {
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
 
+
+    }
+
+    fun onSave(view: View) {
+        saveQuote(applicationContext)
     }
 
 
@@ -120,6 +124,14 @@ class MainActivity : AppCompatActivity() {
                 null
             }
         }
+    }
+
+    fun saveQuote(applicationContext: Context) {
+        CoroutineScope(Dispatchers.Main).launch {
+            mainViewModel.saveQuote(applicationContext)
+        }
+
+
     }
 
 }
