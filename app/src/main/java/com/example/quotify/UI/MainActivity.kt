@@ -81,19 +81,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onShare(view: View) {
-//        val shareText = "${binding.quoteText.text}\n\n— ${binding.quoteAuthor.text}"
-//
-//        val sendIntent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            putExtra(Intent.EXTRA_TEXT, shareText)
-//            type = "text/plain"
-//        }
-//
-//        val shareIntent = Intent.createChooser(sendIntent, null)
-//        startActivity(shareIntent)
+        val shareText = "${binding.quoteText.text}\n\n— ${binding.quoteAuthor.text}"
 
-        val intent = Intent(this,SaveQuoteSeeActivity::class.java)
-        startActivity(intent)
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+
+
 
 
 
@@ -136,6 +135,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun onSaveView(view: View) {
+        val intent = Intent(this,SaveQuoteSeeActivity::class.java)
+        startActivity(intent)
     }
 
 }

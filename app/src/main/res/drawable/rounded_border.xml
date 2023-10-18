@@ -1,0 +1,21 @@
+<!-- res/drawable/rounded_border.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#F6F2FF"
+            android:centerColor="#EDE7F8"
+            android:endColor="#DAD2E2"
+            android:angle="90" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <!-- Border (stroke) -->
+    <item android:left="1dp" android:right="1dp" android:top="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#EDE7F8" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</layer-list>

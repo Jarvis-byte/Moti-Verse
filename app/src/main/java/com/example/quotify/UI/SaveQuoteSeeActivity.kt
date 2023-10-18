@@ -21,6 +21,7 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
     lateinit var FinalSaveQuoteList: LiveData<List<SaveQuotes>>
     lateinit var adapter: QuoteSaveAdaptor
     lateinit var back: ImageView
+    lateinit var delete: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_quote_see)
@@ -28,17 +29,24 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
         val RVList = findViewById<RecyclerView>(R.id.RVList)
         back = findViewById(R.id.back)
         back.setOnClickListener {
-                finish()
+            finish()
+        }
+        delete = findViewById(R.id.delete)
+        delete.setOnClickListener {
+            try {
+                // Delete operation here
+                mainViewModel.deleteQuote(applicationContext)
+                Toast.makeText(
+                    this,
+                    "All Favourite Quotes Deleted Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
-        try {
-            // Delete operation here
-            mainViewModel.deleteQuote(applicationContext)
-            Toast.makeText(this, "Delete Success", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-        }
         CoroutineScope(Dispatchers.Main).launch {
 
             FinalSaveQuoteList = mainViewModel.getQuote(applicationContext)

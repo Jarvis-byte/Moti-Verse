@@ -112,6 +112,7 @@
                 android:layout_weight="1"
                 android:drawableStart="@drawable/ic_left_arrow"
                 android:drawableTint="#80FFFFFF"
+                android:gravity="start"
                 android:onClick="onPrevious"
                 android:text="PREVIOUS"
                 android:textColor="#80FFFFFF"
@@ -120,9 +121,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onSaveView"
+                android:text="Fav Quotes"
+                android:padding="2dp"
+                android:textAllCaps="true"
+                android:background="@drawable/rounded_border"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableEnd="@drawable/ic_arrow"
                 android:drawableTint="#80FFFFFF"
+                android:gravity="end"
                 android:onClick="onNext"
                 android:text="NEXT"
                 android:textAlignment="textEnd"

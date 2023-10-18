@@ -18,26 +18,29 @@
         android:background="#fff"
         android:orientation="vertical"
         android:padding="10dp">
-    <TextView
-        android:id="@+id/Quote_in_RV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
 
-        android:drawablePadding="8dp"
-        android:padding="2dp"
-        android:gravity="center_vertical"
-        android:text="Name" />
+        <TextView
+            android:id="@+id/Quote_in_RV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Quote"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="#454545" />
 
-    <TextView
-        android:id="@+id/Author_in_RV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Data"
-
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:padding="2dp" />
+        <TextView
+            android:id="@+id/Author_in_RV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Author"
+            android:textColor="#FF6200EE"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

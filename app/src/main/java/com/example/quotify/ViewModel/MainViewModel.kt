@@ -65,19 +65,32 @@ class MainViewModel() : ViewModel() {
 
     suspend fun saveQuote(applicationContext: Context) {
         val database = DatabaseHandler.getDatabase(applicationContext)
+        Log.i("DatabaseInstance", database.toString())
         val quoteToSave = quoteList.value?.get(index)
+
         val existingQuote = database.SaveQuoteDAO().getQuoteByContent(quoteToSave?.content)
+        existingQuote?.let { Log.i("DBSAVE", it?.author.toString()) }
         if (existingQuote == null) {
             // Quote doesn't exist, insert it
-            database.SaveQuoteDAO().insertQuote(
-                SaveQuotes(
-                    0,
-                    quoteList.value?.get(index)!!.content,
-                    quoteList.value?.get(index)!!.author
-                )
+            try {
+                database.SaveQuoteDAO().insertQuote(
+                    SaveQuotes(
+                        0,
+                        quoteList.value?.get(index)!!.content,
+                        quoteList.value?.get(index)!!.author
+                    )
 
-            )
-            Toast.makeText(applicationContext, "Quote Saved to wishlist", Toast.LENGTH_SHORT).show()
+                )
+            } catch (e: Exception) {
+                Log.i("DatabaseSaveError", e.toString())
+            }
+
+
+            Toast.makeText(
+                applicationContext,
+                "Quote Saved to wishlist for ${quoteList.value?.get(index)!!.author}",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             Toast.makeText(applicationContext, "Already Saved", Toast.LENGTH_SHORT).show()
             // Quote already exists, handle it as per your requirements
