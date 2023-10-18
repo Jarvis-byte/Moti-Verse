@@ -1,4 +1,4 @@
-package com.example.quotify.Handler
+package com.example.quotify.Database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -13,11 +13,13 @@ interface SaveQuoteDAO {
     suspend fun insertQuote(quotes: SaveQuotes)
 
     @Delete
-    suspend fun deleteQuote(quotes: SaveQuotes)
+    suspend fun deleteQuote(quotes:List<SaveQuotes>?)
 
     @Query("SELECT * FROM SaveQuotes")
     fun getSaveQuote(): LiveData<List<SaveQuotes>>
 
     @Query("SELECT * FROM SaveQuotes WHERE quote = :quote")
     suspend fun getQuoteByContent(quote: String?): SaveQuotes?
+
+
 }

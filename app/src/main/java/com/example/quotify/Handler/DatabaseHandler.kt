@@ -1,9 +1,10 @@
-package com.example.quotify.Database
+package com.example.quotify.Handler
 
 import android.content.Context
 import androidx.room.Room
+import com.example.quotify.Database.QuoteDatabase
 
-object DatabaseHolder {
+object DatabaseHandler {
     private var database: QuoteDatabase? = null
 
     fun getDatabase(context: Context): QuoteDatabase {

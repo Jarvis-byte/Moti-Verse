@@ -3,9 +3,10 @@ package com.example.quotify.ViewModel
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.quotify.Database.DatabaseHolder
+import com.example.quotify.Handler.DatabaseHandler
 import com.example.quotify.HttpHandler.ApiInterface
 import com.example.quotify.HttpHandler.Retrofit_Instance
 import com.example.quotify.Model.SaveQuotes
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class MainViewModel() : ViewModel() {
 
     internal var quoteList = MutableLiveData<List<RandomQuotesDataItem>>()
+
 
     var index = 0
     var ListSize = 0
@@ -62,7 +64,7 @@ class MainViewModel() : ViewModel() {
     }
 
     suspend fun saveQuote(applicationContext: Context) {
-        val database = DatabaseHolder.getDatabase(applicationContext)
+        val database = DatabaseHandler.getDatabase(applicationContext)
         val quoteToSave = quoteList.value?.get(index)
         val existingQuote = database.SaveQuoteDAO().getQuoteByContent(quoteToSave?.content)
         if (existingQuote == null) {
@@ -82,6 +84,26 @@ class MainViewModel() : ViewModel() {
             // You can show a message, log it, or take any other action.
         }
 
+
+    }
+
+    fun getQuote(applicationContext: Context): LiveData<List<SaveQuotes>> {
+        val database = DatabaseHandler.getDatabase(applicationContext)
+        val quoteListInDb = database.SaveQuoteDAO().getSaveQuote()
+        return quoteListInDb
+    }
+
+    fun deleteQuote(applicationContext: Context) {
+        val database = DatabaseHandler.getDatabase(applicationContext)
+
+        // Observe the LiveData and perform the delete operation when data is available
+        database.SaveQuoteDAO().getSaveQuote().observeForever { quotesList ->
+            quotesList?.let { nonNullQuotesList ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    database.SaveQuoteDAO().deleteQuote(nonNullQuotesList)
+                }
+            }
+        }
 
     }
 }

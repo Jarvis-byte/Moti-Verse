@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/idCVCOurseItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:backgroundTint="#fff"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="2"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="10dp">
+    <TextView
+        android:id="@+id/Quote_in_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+
+        android:drawablePadding="8dp"
+        android:padding="2dp"
+        android:gravity="center_vertical"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/Author_in_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Data"
+
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="2dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
