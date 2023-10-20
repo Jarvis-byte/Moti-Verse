@@ -1,5 +1,6 @@
 package com.example.quotify.UI
 
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -38,6 +39,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.loadingAnimation.playAnimation()
@@ -93,9 +98,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(shareIntent)
 
 
-
-
-
     }
 
     fun onSave(view: View) {
@@ -138,7 +140,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSaveView(view: View) {
-        val intent = Intent(this,SaveQuoteSeeActivity::class.java)
+        val intent = Intent(this, SaveQuoteSeeActivity::class.java)
         startActivity(intent)
     }
 
