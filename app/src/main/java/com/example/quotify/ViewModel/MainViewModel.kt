@@ -88,7 +88,7 @@ class MainViewModel() : ViewModel() {
 
             Toast.makeText(
                 applicationContext,
-                "Quote Saved to wishlist for ${quoteList.value?.get(index)!!.author}",
+                "Quote saved to Favourite",
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -106,18 +106,9 @@ class MainViewModel() : ViewModel() {
         return quoteListInDb
     }
 
-    fun deleteQuote(applicationContext: Context) {
+    suspend fun deleteAllQuotes(applicationContext: Context) {
         val database = DatabaseHandler.getDatabase(applicationContext)
-
-        // Observe the LiveData and perform the delete operation when data is available
-        database.SaveQuoteDAO().getSaveQuote().observeForever { quotesList ->
-            quotesList?.let { nonNullQuotesList ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    database.SaveQuoteDAO().deleteQuote(nonNullQuotesList)
-                }
-            }
-        }
-
+        database.SaveQuoteDAO().deleteAllQuotes()
     }
 
     fun currentBookmarkStatus(): Boolean {
@@ -133,5 +124,8 @@ class MainViewModel() : ViewModel() {
 
         return database.SaveQuoteDAO().doesQuoteExist(quote)
     }
-
+    suspend fun deleteQuoteByContent(quote: String,applicationContext: Context) {
+        val database = DatabaseHandler.getDatabase(applicationContext)
+        database.SaveQuoteDAO().deleteQuoteByContent(quote)
+    }
 }

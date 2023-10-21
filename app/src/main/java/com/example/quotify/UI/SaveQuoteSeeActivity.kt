@@ -34,13 +34,17 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
         delete = findViewById(R.id.delete)
         delete.setOnClickListener {
             try {
+
                 // Delete operation here
-                mainViewModel.deleteQuote(applicationContext)
-                Toast.makeText(
-                    this,
-                    "All Favourite Quotes Deleted Successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+                CoroutineScope(Dispatchers.Main).launch {
+                    mainViewModel.deleteAllQuotes(applicationContext)
+                    Toast.makeText(
+                        applicationContext,
+                        "All Favourite Quotes Deleted Successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
