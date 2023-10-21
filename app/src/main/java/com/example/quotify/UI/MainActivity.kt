@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         floatingSaveButton = findViewById<ImageButton>(R.id.floatingSaveButton)
-        updateImageButton()
+
+//        updateImageButton()
     }
 
     fun setQuote(quote: RandomQuotesDataItem?) {
@@ -102,11 +103,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSave(view: View) {
-
-
-
         if (view is ImageButton) {
             mainViewModel.isImageChanged = !mainViewModel.isImageChanged
+            Log.i("STATE", mainViewModel.isImageChanged.toString())
             updateImageButton()
         }
     }
@@ -117,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             saveQuote(applicationContext)
         } else {
             floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
+
             // Delete the saved data
         }
     }
@@ -124,6 +124,24 @@ class MainActivity : AppCompatActivity() {
 
     fun onNext(view: View) {
         mainViewModel.nextQuote()
+//        mainViewModel.isImageChanged = !mainViewModel.isImageChanged
+        CoroutineScope(Dispatchers.Main).launch {
+            val quoteExists = mainViewModel.checkIfQuoteExists(
+                mainViewModel.getQuote()!!.content,
+                applicationContext
+            )
+            if (quoteExists) {
+                // The quote exists in the database
+                mainViewModel.isImageChanged =true
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
+            } else {
+                // The quote does not exist in the database
+                mainViewModel.isImageChanged =false
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
+            }
+
+        }
+
         setQuote(mainViewModel.getQuote())
 //        Toast.makeText(this, "Called", Toast.LENGTH_SHORT).show()
 
@@ -132,6 +150,23 @@ class MainActivity : AppCompatActivity() {
 
     fun onPrevious(view: View) {
         mainViewModel.PrevQuote()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val quoteExists = mainViewModel.checkIfQuoteExists(
+                mainViewModel.getQuote()!!.content,
+                applicationContext
+            )
+            if (quoteExists) {
+                // The quote exists in the database
+                mainViewModel.isImageChanged =true
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
+            } else {
+                // The quote does not exist in the database
+                mainViewModel.isImageChanged =false
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
+            }
+
+        }
         setQuote(mainViewModel.getQuote())
 
 
