@@ -13,7 +13,7 @@ interface SaveQuoteDAO {
     suspend fun insertQuote(quotes: SaveQuotes)
 
     @Delete
-    suspend fun deleteQuote(quotes:List<SaveQuotes>?)
+    suspend fun deleteQuote(quotes: List<SaveQuotes>?)
 
     @Query("SELECT * FROM SaveQuotes")
     fun getSaveQuote(): LiveData<List<SaveQuotes>>
@@ -21,5 +21,6 @@ interface SaveQuoteDAO {
     @Query("SELECT * FROM SaveQuotes WHERE quote = :quote")
     suspend fun getQuoteByContent(quote: String?): SaveQuotes?
 
-
+    @Query("SELECT EXISTS (SELECT 1 FROM SaveQuotes WHERE quote = :quote LIMIT 1)")
+    suspend fun doesQuoteExist(quote: String): Boolean
 }

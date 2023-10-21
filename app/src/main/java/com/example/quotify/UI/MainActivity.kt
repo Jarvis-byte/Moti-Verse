@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -29,13 +30,10 @@ const val TAGHttp = "Http Call"
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
-
-    //    lateinit var quoteText: TextView
-//    lateinit var quoteAuthor: TextView
-//    lateinit var anim: LottieAnimationView
-//    lateinit var quote_image: ImageView
     lateinit var binding: ActivityMainBinding
+    private var isImageChanged = false
 
+    lateinit var floatingSaveButton: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             setQuote(mainViewModel.getQuote())
 
         })
+
         mainViewModel.apicall()
 
         GlobalScope.launch(Dispatchers.Main) {
@@ -75,7 +74,9 @@ class MainActivity : AppCompatActivity() {
                 Log.e("TOKEN_ERROR", "Failed to retrieve FCM token")
             }
         }
-//        saveQuote(applicationContext)
+
+        floatingSaveButton = findViewById<ImageButton>(R.id.floatingSaveButton)
+        updateImageButton()
     }
 
     fun setQuote(quote: RandomQuotesDataItem?) {
@@ -101,7 +102,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSave(view: View) {
-        saveQuote(applicationContext)
+
+
+
+        if (view is ImageButton) {
+            mainViewModel.isImageChanged = !mainViewModel.isImageChanged
+            updateImageButton()
+        }
+    }
+
+    private fun updateImageButton() {
+        if (mainViewModel.isImageChanged) {
+            floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
+            saveQuote(applicationContext)
+        } else {
+            floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
+            // Delete the saved data
+        }
     }
 
 
@@ -135,8 +152,6 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             mainViewModel.saveQuote(applicationContext)
         }
-
-
     }
 
     fun onSaveView(view: View) {

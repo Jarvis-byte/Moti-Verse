@@ -20,7 +20,7 @@ class MainViewModel() : ViewModel() {
 
     internal var quoteList = MutableLiveData<List<RandomQuotesDataItem>>()
 
-
+    var isImageChanged: Boolean = false
     var index = 0
     var ListSize = 0
 
@@ -119,4 +119,19 @@ class MainViewModel() : ViewModel() {
         }
 
     }
+
+    fun currentBookmarkStatus(): Boolean {
+
+        return isImageChanged
+    }
+
+    fun ChangeImageStatus() {
+        isImageChanged = !isImageChanged
+    }
+    suspend fun checkIfQuoteExists(quote: String,applicationContext: Context): Boolean {
+        val database = DatabaseHandler.getDatabase(applicationContext)
+
+        return database.SaveQuoteDAO().doesQuoteExist(quote)
+    }
+
 }
