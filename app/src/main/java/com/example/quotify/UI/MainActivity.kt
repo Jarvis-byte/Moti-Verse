@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var floatingSaveButton: ImageButton
     var firsttime: Boolean = true
-
+    var alertDialog: AlertDialog? = null
 
     companion object {
         private const val NOTIFICATION_PERMISSION_CODE = 100
@@ -137,24 +137,24 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this@MainActivity)
         val dialogView: View = layoutInflater.inflate(R.layout.dialog_no_internet, null)
         builder.setView(dialogView)
-        val dialog = builder.create()
+        alertDialog = builder.create()
         // Set the dialog to not be cancelable by clicking outside of it
-        dialog.setCanceledOnTouchOutside(false)
+        alertDialog!!.setCanceledOnTouchOutside(false)
         dialogView.findViewById<View>(R.id.btnReset).setOnClickListener { // aLodingDialog.show();
             startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-            dialog.dismiss()
+            alertDialog!!.dismiss()
         }
         dialogView.findViewById<View>(R.id.Cancel).setOnClickListener {
 
-            dialog.dismiss()
+            alertDialog!!.dismiss()
             finish()
 
 
         }
-        if (dialog.window != null) {
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        if (alertDialog!!.window != null) {
+            alertDialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
         }
-        dialog.show()
+        alertDialog!!.show()
     }
 
     // This function is called when the user accepts or decline the permission.
@@ -312,6 +312,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         mainViewModel.getQuotelist().removeObservers(this)
         mainViewModel.quoteExists.removeObservers(this)
+        alertDialog?.dismiss()
     }
 
 }
