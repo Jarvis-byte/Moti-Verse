@@ -176,7 +176,7 @@
                 android:drawableTint="@color/colorSecondaryText"
                 android:gravity="start|center_vertical"
                 android:onClick="onPrevious"
-                android:text="PREVIOUS"
+                android:text="PREV"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="15sp" />
 

@@ -44,6 +44,7 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+                mainViewModel.isImageChanged = false
 
             } catch (e: Exception) {
                 e.printStackTrace()

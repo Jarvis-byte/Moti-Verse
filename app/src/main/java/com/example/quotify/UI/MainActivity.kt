@@ -5,11 +5,14 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.quotify.Handler.DeviceIdHandler
+import com.example.quotify.HttpHandler.NoInternet
 import com.example.quotify.R
 import com.example.quotify.RandomQuotesDataItem
 import com.example.quotify.ViewModel.MainViewModel
@@ -37,18 +41,29 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
     lateinit var floatingSaveButton: ImageButton
+    var firsttime: Boolean = true
+
 
     companion object {
         private const val NOTIFICATION_PERMISSION_CODE = 100
 
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        requestLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+//        No Internet
+        val noInternet = NoInternet()
+        noInternet.isConnected(applicationContext)
+        if (!noInternet.isConnected(applicationContext)) {
+            showCustomeDialog()
+            return
+        }
+        /*
+        No Internet finish
+        */
         binding.loadingAnimation.playAnimation()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -87,6 +102,21 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.POST_NOTIFICATIONS,
             NOTIFICATION_PERMISSION_CODE
         )
+//        updateImageButton()
+//        checkDbToGetStatus()
+        floatingSaveButton.setImageResource(mainViewModel.currentImageResource)
+        mainViewModel.quoteExists.observe(this, { quoteExists ->
+            if (quoteExists) {
+                // The quote exists in the database
+                mainViewModel.isImageChanged = true
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
+            } else {
+                // The quote does not exist in the database
+                mainViewModel.isImageChanged = false
+                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
+            }
+        })
+
     }
 
 
@@ -99,15 +129,33 @@ class MainActivity : AppCompatActivity() {
             // Requesting the permission
             ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
         } else {
-            Toast.makeText(
-                this@MainActivity,
-                "Notification Permission already granted",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+
         }
     }
 
+    private fun showCustomeDialog() {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        val dialogView: View = layoutInflater.inflate(R.layout.dialog_no_internet, null)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        // Set the dialog to not be cancelable by clicking outside of it
+        dialog.setCanceledOnTouchOutside(false)
+        dialogView.findViewById<View>(R.id.btnReset).setOnClickListener { // aLodingDialog.show();
+            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+            dialog.dismiss()
+        }
+        dialogView.findViewById<View>(R.id.Cancel).setOnClickListener {
+
+            dialog.dismiss()
+            finish()
+
+
+        }
+        if (dialog.window != null) {
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }
+        dialog.show()
+    }
 
     // This function is called when the user accepts or decline the permission.
 // Request Code is used to check which permission called this function.
@@ -178,43 +226,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateImageButton() {
         if (mainViewModel.isImageChanged) {
-
-            floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
-
+            mainViewModel.currentImageResource = R.drawable.baseline_bookmark_24
             saveQuote(applicationContext)
+            firsttime = false
         } else {
-            floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
-
-            // Delete the saved data
-            CoroutineScope(Dispatchers.Main).launch {
-                deleteQuote(mainViewModel.getQuote()!!.content, applicationContext)
+            mainViewModel.currentImageResource = R.drawable.baseline_bookmark_border_24
+            if (!firsttime) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    deleteQuote(mainViewModel.getQuote()!!.content, applicationContext)
+                }
             }
-
+            firsttime = false
         }
+
+        // Set the image resource from the ViewModel
+        floatingSaveButton.setImageResource(mainViewModel.currentImageResource)
     }
 
 
     fun onNext(view: View) {
         mainViewModel.nextQuote()
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val quoteExists = mainViewModel.checkIfQuoteExists(
-                mainViewModel.getQuote()!!.content,
-                applicationContext
-            )
-            if (quoteExists) {
-                // The quote exists in the database
-                mainViewModel.isImageChanged = true
-                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_24)
-
-            } else {
-                // The quote does not exist in the database
-                mainViewModel.isImageChanged = false
-                floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
-
-            }
-
-        }
+        checkDbToGetStatus()
         setQuote(mainViewModel.getQuote())
 
 //        Toast.makeText(this, "Called", Toast.LENGTH_SHORT).show()
@@ -222,14 +255,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun onPrevious(view: View) {
-        mainViewModel.PrevQuote()
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val quoteExists = mainViewModel.checkIfQuoteExists(
-                mainViewModel.getQuote()!!.content,
-                applicationContext
-            )
+    fun checkDbToGetStatus() {
+        mainViewModel.quoteExists.observe(this) { quoteExists ->
             if (quoteExists) {
                 // The quote exists in the database
                 mainViewModel.isImageChanged = true
@@ -239,8 +266,22 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.isImageChanged = false
                 floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
             }
-
         }
+
+        // Trigger the checkIfQuoteExists function
+        CoroutineScope(Dispatchers.Main).launch {
+            mainViewModel.checkIfQuoteExists(
+                mainViewModel.getQuote()!!.content,
+                applicationContext
+            )
+        }
+    }
+
+
+    fun onPrevious(view: View) {
+        mainViewModel.PrevQuote()
+
+        checkDbToGetStatus()
 
         setQuote(mainViewModel.getQuote())
     }
@@ -265,6 +306,12 @@ class MainActivity : AppCompatActivity() {
     fun onSaveView(view: View) {
         val intent = Intent(this, SaveQuoteSeeActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.getQuotelist().removeObservers(this)
+        mainViewModel.quoteExists.removeObservers(this)
     }
 
 }

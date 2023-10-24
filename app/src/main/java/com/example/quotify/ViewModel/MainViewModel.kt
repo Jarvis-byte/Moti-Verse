@@ -10,6 +10,7 @@ import com.example.quotify.Handler.DatabaseHandler
 import com.example.quotify.HttpHandler.ApiInterface
 import com.example.quotify.HttpHandler.Retrofit_Instance
 import com.example.quotify.Model.SaveQuotes
+import com.example.quotify.R
 import com.example.quotify.RandomQuotesDataItem
 import com.example.quotify.UI.TAGHttp
 import kotlinx.coroutines.CoroutineScope
@@ -19,10 +20,14 @@ import kotlinx.coroutines.launch
 class MainViewModel() : ViewModel() {
 
     internal var quoteList = MutableLiveData<List<RandomQuotesDataItem>>()
-
+    var currentImageResource: Int = R.drawable.baseline_bookmark_border_24
     var isImageChanged: Boolean = false
     var index = 0
     var ListSize = 0
+    val quoteExists: LiveData<Boolean>
+        get() = checkIfQuoteExistsLiveData
+
+    private val checkIfQuoteExistsLiveData = MutableLiveData<Boolean>()
 
     // Getter for quoteList
     internal fun getQuotelist(): MutableLiveData<List<RandomQuotesDataItem>> {
@@ -111,20 +116,29 @@ class MainViewModel() : ViewModel() {
         database.SaveQuoteDAO().deleteAllQuotes()
     }
 
-    fun currentBookmarkStatus(): Boolean {
+    //
+//    fun currentBookmarkStatus(): Boolean {
+//
+//        return isImageChanged
+//    }
+//
+//    fun ChangeImageStatus() {
+//        isImageChanged = !isImageChanged
+//    }
+//    suspend fun checkIfQuoteExists(quote: String, applicationContext: Context): Boolean {
+//        val database = DatabaseHandler.getDatabase(applicationContext)
+//
+//        return database.SaveQuoteDAO().doesQuoteExist(quote)
+//    }
 
-        return isImageChanged
-    }
-
-    fun ChangeImageStatus() {
-        isImageChanged = !isImageChanged
-    }
-    suspend fun checkIfQuoteExists(quote: String,applicationContext: Context): Boolean {
+    // Modify checkIfQuoteExists to set the value in LiveData
+    suspend fun checkIfQuoteExists(quote: String, applicationContext: Context) {
         val database = DatabaseHandler.getDatabase(applicationContext)
-
-        return database.SaveQuoteDAO().doesQuoteExist(quote)
+        val quoteExists = database.SaveQuoteDAO().doesQuoteExist(quote)
+        checkIfQuoteExistsLiveData.postValue(quoteExists)
     }
-    suspend fun deleteQuoteByContent(quote: String,applicationContext: Context) {
+
+    suspend fun deleteQuoteByContent(quote: String, applicationContext: Context) {
         val database = DatabaseHandler.getDatabase(applicationContext)
         database.SaveQuoteDAO().deleteQuoteByContent(quote)
     }
