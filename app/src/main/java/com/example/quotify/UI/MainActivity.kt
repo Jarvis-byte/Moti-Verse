@@ -30,6 +30,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var floatingSaveButton: ImageButton
     var firsttime: Boolean = true
     var alertDialog: AlertDialog? = null
-
+    private var tokenJob: Job? = null
     companion object {
         private const val NOTIFICATION_PERMISSION_CODE = 100
 
@@ -289,8 +290,8 @@ class MainActivity : AppCompatActivity() {
     suspend fun getToken(): String? {
         return withContext(Dispatchers.IO) {
             try {
-                val task = FirebaseMessaging.getInstance().token.await()
-                task
+                val token = FirebaseMessaging.getInstance().token.await()
+                token
             } catch (e: Exception) {
                 null
             }
@@ -313,6 +314,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getQuotelist().removeObservers(this)
         mainViewModel.quoteExists.removeObservers(this)
         alertDialog?.dismiss()
+        tokenJob?.cancel()
     }
 
 }
