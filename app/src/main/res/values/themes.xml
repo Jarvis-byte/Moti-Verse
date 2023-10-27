@@ -19,6 +19,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
+
     <style name="Base.Theme.Quotify.NoActionBarAndStatusbar">
         <item name="windowActionBar">
             false
