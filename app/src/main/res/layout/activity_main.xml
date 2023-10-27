@@ -8,7 +8,7 @@
 
         <variable
             name="quote"
-            type="com.example.quotify.RandomQuotesDataItem" />
+            type="com.arka.quotify.RandomQuotesDataItem" />
 
     </data>
 
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:background="#EDE7F8"
         android:orientation="vertical"
-        tools:context=".UI.MainActivity">
+        tools:context="com.arka.quotify.UI.MainActivity">
 
         <TextView
             android:id="@+id/App_name"
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="QUOTIFY"
+            android:text="MotiVerse"
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="28sp" />

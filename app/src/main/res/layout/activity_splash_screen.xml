@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDE7F8"
-    tools:context=".UI.SplashScreen">
+    tools:context="com.arka.quotify.UI.SplashScreen">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Quotify"
+        android:text="MotiVerse"
         android:textAlignment="center"
         android:textColor="@color/okButton"
         android:textSize="70sp"

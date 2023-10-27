@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.quotify'
+    namespace 'com.arka.quotify'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.quotify"
+        applicationId "com.arka.quotify"
         minSdk 26
         targetSdk 33
         versionCode 1
