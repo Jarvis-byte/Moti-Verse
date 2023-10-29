@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 //        updateImageButton()
 //        checkDbToGetStatus()
         floatingSaveButton.setImageResource(mainViewModel.currentImageResource)
-        mainViewModel.quoteExists.observe(this, { quoteExists ->
+        mainViewModel.quoteExists.observe(this) { quoteExists ->
             if (quoteExists) {
                 // The quote exists in the database
                 mainViewModel.isImageChanged = true
@@ -117,7 +117,17 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.isImageChanged = false
                 floatingSaveButton.setImageResource(R.drawable.baseline_bookmark_border_24)
             }
-        })
+        }
+
+
+    }
+
+
+
+
+    override fun onRestart() {
+        super.onRestart()
+        checkDbToGetStatus()
 
     }
 
