@@ -31,6 +31,7 @@
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="28sp" />
+
         <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
@@ -65,7 +66,8 @@
                         android:layout_below="@+id/App_name"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:textIsSelectable="true">
 
                         <ImageView
                             android:id="@+id/quote_image"
@@ -85,6 +87,7 @@
                             android:paddingStart="10dp"
                             android:text="@{quote.content}"
                             android:textColor="#454545"
+                            android:textIsSelectable="true"
                             android:textSize="24sp"
                             android:visibility="gone" />
 
@@ -97,6 +100,7 @@
                             android:paddingStart="10dp"
                             android:text="@{quote.author}"
                             android:textColor="#454545"
+                            android:textIsSelectable="true"
                             android:textSize="20sp"
                             android:visibility="gone" />
 
@@ -106,8 +110,8 @@
                             android:layout_height="200dp"
                             android:layout_gravity="center"
                             android:paddingStart="10dp"
-                            app:lottie_fileName="quote_loading.json"
                             app:lottie_autoPlay="true"
+                            app:lottie_fileName="quote_loading.json"
                             app:lottie_loop="true"
                             app:lottie_speed="1.5" />
 
@@ -141,11 +145,23 @@
                                 android:id="@+id/floatingSaveButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
                                 android:background="@android:color/transparent"
                                 android:clickable="true"
                                 android:onClick="onSave"
                                 android:paddingHorizontal="8dp"
+
                                 android:src="@drawable/baseline_bookmark_border_24" />
+
+                            <ImageButton
+                                android:id="@+id/copy_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:clickable="true"
+                                android:onClick="onCopy"
+                                android:paddingHorizontal="8dp"
+                                android:src="@drawable/baseline_content_copy_24" />
 
                         </LinearLayout>
 

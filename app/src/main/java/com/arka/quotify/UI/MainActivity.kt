@@ -2,6 +2,8 @@ package com.arka.quotify.UI
 
 
 import android.Manifest
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         /*
         No Internet finish
         */
-       binding.loadingAnimation.playAnimation()
+        binding.loadingAnimation.playAnimation()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -81,6 +83,8 @@ class MainActivity : AppCompatActivity() {
             binding.loadingAnimation.visibility = View.GONE
 
         })
+        binding.quoteText.setTextIsSelectable(true)
+        binding.quoteAuthor.setTextIsSelectable(true)
 
         mainViewModel.apicall()
 
@@ -123,8 +127,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun copyToClipboard(quoteText: String, quoteAuthor: String) {
+        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("Copied Text", "❝ $quoteText ❞ \n🎙️ — $quoteAuthor")
+        clipboardManager.setPrimaryClip(clipData)
+    }
 
+    fun onCopy(view: View) {
 
+//        val textToCopy = "${binding.quoteText.text} - by ${binding.quoteAuthor.text}"
+
+        val textToCopy = binding.quoteText.text.toString()
+        val authorToCopy = binding.quoteAuthor.text.toString()
+        copyToClipboard(textToCopy, authorToCopy)
+    }
 
     override fun onRestart() {
         super.onRestart()
@@ -215,7 +231,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onShare(view: View) {
-        val shareText = "${binding.quoteText.text}\n\n— ${binding.quoteAuthor.text}"
+        val shareText = "❝${binding.quoteText.text}❞\n\n 🎤 — ${binding.quoteAuthor.text}"
 
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
