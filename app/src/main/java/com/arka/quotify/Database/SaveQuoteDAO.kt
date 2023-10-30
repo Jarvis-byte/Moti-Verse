@@ -25,4 +25,6 @@ interface SaveQuoteDAO {
 
     @Query("DELETE FROM SaveQuotes WHERE quote = :quote")
     suspend fun deleteQuoteByContent(quote: String)
+
+
 }
