@@ -88,6 +88,11 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
                     val position = viewHolder.adapterPosition
                     val mutableList = FinalSaveQuoteList.value?.toMutableList() ?: mutableListOf()
                     val itemToRemove = mutableList.removeAt(position)
+                    Toast.makeText(
+                        applicationContext,
+                        "Quote at position ${position + 1} by ${itemToRemove.author} deleted successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     CoroutineScope(Dispatchers.IO).launch {
                         val database = DatabaseHandler.getDatabase(applicationContext)
