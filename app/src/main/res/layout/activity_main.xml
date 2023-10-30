@@ -107,7 +107,9 @@
                             android:layout_gravity="center"
                             android:paddingStart="10dp"
                             app:lottie_fileName="quote_loading.json"
-                            app:lottie_speed="1" />
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_speed="1.5" />
 
                         <!-- View to display a line -->
                         <View

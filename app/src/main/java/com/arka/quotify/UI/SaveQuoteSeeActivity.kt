@@ -3,6 +3,7 @@ package com.arka.quotify.UI
 
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -88,6 +89,8 @@ class SaveQuoteSeeActivity : AppCompatActivity() {
                     val position = viewHolder.adapterPosition
                     val mutableList = FinalSaveQuoteList.value?.toMutableList() ?: mutableListOf()
                     val itemToRemove = mutableList.removeAt(position)
+                    Log.i("SWIPE_DELETE", itemToRemove.author)
+                    Log.i("SWIPE_DELETE", position.toString())
                     Toast.makeText(
                         applicationContext,
                         "Quote at position ${position + 1} by ${itemToRemove.author} deleted successfully",

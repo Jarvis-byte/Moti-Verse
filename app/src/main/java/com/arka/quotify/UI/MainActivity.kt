@@ -66,18 +66,19 @@ class MainActivity : AppCompatActivity() {
         /*
         No Internet finish
         */
-        binding.loadingAnimation.playAnimation()
+       binding.loadingAnimation.playAnimation()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         binding.quote = mainViewModel.getQuote()
 
         mainViewModel.getQuotelist().observe(this, Observer {
-            binding.loadingAnimation.visibility = View.GONE
+
             binding.quoteText.visibility = View.VISIBLE
             binding.quoteAuthor.visibility = View.VISIBLE
             binding.quoteImage.visibility = View.VISIBLE
             setQuote(mainViewModel.getQuote())
+            binding.loadingAnimation.visibility = View.GONE
 
         })
 
