@@ -4,6 +4,10 @@ Hey there, app enthusiasts! I am thrilled to introduce an amazing new app create
 
 ## 🌟 **Motiverse** is your go-to source for daily inspiration and motivation. Whether you're seeking a boost of positivity, a dose of wisdom, or simply a way to kickstart your day on the right foot, this app has got you covered.
 
+
+Download Motiverse on the [Google Play](https://play.google.com/store/apps/details?id=com.arka.quotify).
+
+
 Here's what you can do with **Motiverse**:
 
 - ✨ **Random Quotes**: Access an endless collection of hand-picked quotes that will inspire and uplift you.
@@ -37,7 +41,6 @@ For all you tech aficionados out there, here's a peek into the technology stack 
 
 So, why wait? Download **Motiverse** now and kickstart your journey towards a more inspired and motivated you. Let's make every day a little brighter and more uplifting, one quote at a time. 🌈🌞
 
-Download Motiverse on the [Google Play](https://play.google.com/store/apps/details?id=com.arka.quotify).
 
 Get ready to embrace a daily dose of inspiration! 
 
