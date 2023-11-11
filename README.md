@@ -5,7 +5,7 @@ Hey there, app enthusiasts! I am thrilled to introduce an amazing new app create
 ## 🌟 **Motiverse** is your go-to source for daily inspiration and motivation. Whether you're seeking a boost of positivity, a dose of wisdom, or simply a way to kickstart your day on the right foot, this app has got you covered.
 
 
-Download Motiverse on the [Google Play](https://play.google.com/store/apps/details?id=com.arka.quotify).
+👉🏻 ➡️ **Download Motiverse on the [Google Play](https://play.google.com/store/apps/details?id=com.arka.quotify).** 👈🏻 ⬅️
 
 
 Here's what you can do with **Motiverse**:
