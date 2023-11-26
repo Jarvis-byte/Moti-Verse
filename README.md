@@ -1,6 +1,6 @@
 # 🚀 Exciting News: Introducing MotiVerse - Your Daily Dose of Inspiration! 🌟
 
-Hey there, app enthusiasts! I am thrilled to introduce an amazing new app created by me - "MotiVerse." 📱💡
+Hey there, app enthusiasts! I am thrilled to introduce an amazing new app created by me - "MotiVerse." 📲 💡
 
 ## 🌟 **Motiverse** is your go-to source for daily inspiration and motivation. Whether you're seeking a boost of positivity, a dose of wisdom, or simply a way to kickstart your day on the right foot, this app has got you covered.
 
